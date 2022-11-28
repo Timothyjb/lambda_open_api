@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "lambda_open_api"
+require "lambda_open_api/core_path.rb"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -12,4 +13,6 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  p "hellloooo"
 end

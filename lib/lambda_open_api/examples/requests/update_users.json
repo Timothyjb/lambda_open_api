@@ -1,0 +1,23 @@
+{
+  "data": {
+    "attributes": {
+      "name": "string",
+      "app_url": "string",
+      "agent_id": 0,
+      "auth_url": "string",
+      "oauth_connect_url": "string",
+      "oauth_connect_url_is_direct_link": true,
+      "company": "string",
+      "api_version": "string",
+      "scope": "string",
+      "grant_type": "string",
+      "external_id": "string",
+      "client_creds_in_header": true,
+      "test_params": "string",
+      "encrypt": true,
+      "has_successful_api_call": true,
+      "test_endpoint_id": 0,
+      "environment_type": "string"
+    }
+  }
+}
