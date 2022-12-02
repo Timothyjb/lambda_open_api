@@ -5,8 +5,8 @@ RSpec.describe LambdaOpenApi::ToProcess do
 
   resource "Users" do
     get "users/{id}" do
-      path_description "yoyoyoyo"
-      path_summery "some ther summery"
+      path_summery "Some very high level details"
+      path_description "Some more details about this path"
 
       example_case "200" do
         url_params({id: 1})
@@ -42,10 +42,5 @@ RSpec.describe LambdaOpenApi::ToProcess do
         end
       end
     end
-
-
   end
-
 end
-
-

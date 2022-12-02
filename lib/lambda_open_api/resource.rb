@@ -3,8 +3,8 @@ require_relative "body_parameter"
 require_relative "response"
 
 module LambdaOpenApi
-
   class Resource
+    PARAMATER_EXPRESION = /[:\{](\w+)\}?/
     METHOD_MAP = {
       :index => "get",
       :show => "get",
@@ -18,17 +18,12 @@ module LambdaOpenApi
     attr_accessor :method, :http_verb, :name, :param, :path_name, :parameters, :responses, :code, :description, :summery
 
     def initialize()
-      # @method = method
-      # @name = name
-      # @param = param
-      # @path_name = determine_path_name
-      # @http_verb = METHOD_MAP[method]
       @responses = {}
       @parameters = []
     end
 
     def set_path_paramater
-      matches = @path_name.scan /[:\{](\w+)\}?/
+      matches = @path_name.scan PARAMATER_EXPRESION
 
       if matches.any?
 
@@ -55,14 +50,6 @@ module LambdaOpenApi
       end
     end
 
-    # def path_name
-    #   @path_name || determine_path_name
-    # end
-
-    # def determine_path_name
-    #   METHOD_WITH_PARAM.include?(method) ? "/#{name.to_s}/{#{param}}" : "/#{name.to_s}"
-    # end
-
     def path_data
       {
         "tags"=> [titleize(@name)],
@@ -83,7 +70,6 @@ module LambdaOpenApi
     def titleize(string)
       string.to_s.split("_").map{|word| word.capitalize}.join(" ")
     end
-
 
   end
 

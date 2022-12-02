@@ -87,7 +87,7 @@ module LambdaOpenApi
 
     def url_params(hash)
       path = @res.path_name.dup
-      @event_hash["resource"] = path.gsub(/[:\{](\w+)\}?/) {|match|
+      @event_hash["resource"] = path.gsub(LambdaOpenApi::Resource::PARAMATER_EXPRESION) {|match|
         match = hash[match.delete('{}:').to_sym]
       }
     end
@@ -96,7 +96,7 @@ module LambdaOpenApi
       @lambda_method = method_name
     end
 
-    def run_lambda(&block)
+    def run_lambda(test_name=nil, &block)
       url_params({}) if @event_hash["resource"].nil?
       @lambda_response = described_class.send(@lambda_method || "process", event: @event_hash)
       @res.set_response(@lambda_response["body"] || @lambda_response)
@@ -105,7 +105,7 @@ module LambdaOpenApi
         expect(self.class.lambda_response[:statusCode].to_s).to eq self.class.res.code
       end
 
-      it "#{@res.path_name}" do
+      it "#{test_name || @res.path_name}" do
         def lambda_response
           self.class.lambda_response
         end

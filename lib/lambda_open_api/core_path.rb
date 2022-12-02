@@ -9,9 +9,7 @@ class CorePath
   def self.generate_docs
     open_api = high_level.merge({"paths" => @core_paths})
 
-    File.open(LambdaOpenApi.configuration.file_name, "w") {|f| f.write(open_api.to_json) }
-
-    # puts JSON.pretty_generate(open_api)
+    File.open(LambdaOpenApi.configuration.file_name, "w") {|f| f.write(JSON.pretty_generate(open_api)) }
   end
 
   def self.high_level
