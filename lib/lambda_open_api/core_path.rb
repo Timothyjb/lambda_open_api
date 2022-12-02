@@ -1,7 +1,5 @@
-require_relative "details"
 
 class CorePath
-  extend LambdaOpenApi::Details
   @core_paths = {}
 
   def self.core_paths
@@ -9,14 +7,25 @@ class CorePath
   end
 
   def self.generate_docs
-    self.title = "Workflow Settings Api"
-    self.description = "About this api"
-    self.version = "1"
-    self.host = "https://google.com"
+    open_api = high_level.merge({"paths" => @core_paths})
 
-
-    open_api = details.merge({"paths" => @core_paths})
+    File.open(LambdaOpenApi.configuration.file_name, "w") {|f| f.write(open_api.to_json) }
 
     # puts JSON.pretty_generate(open_api)
+  end
+
+  def self.high_level
+    {
+      "swagger" => "2.0",
+      "info" => {
+        "title" => LambdaOpenApi.configuration.title,
+        "description" => LambdaOpenApi.configuration.description,
+        "version" => LambdaOpenApi.configuration.version
+      },
+      "host" => LambdaOpenApi.configuration.host,
+      "schemes" => LambdaOpenApi.configuration.schemes,
+      "consumes" => LambdaOpenApi.configuration.consumes,
+      "produces" => LambdaOpenApi.configuration.produces
+    }
   end
 end

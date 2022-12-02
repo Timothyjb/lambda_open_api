@@ -1,15 +1,15 @@
 require_relative '../spec_helper'
 require_relative '../../lib/lambda_open_api/to_process'
-require_relative '../../lib/lambda_open_api/creater'
 
 RSpec.describe LambdaOpenApi::ToProcess do
 
-  # @core_paths = {}
   resource "Users" do
-
     get "users/{id}" do
+      path_description "yoyoyoyo"
+      path_summery "some ther summery"
+
       example_case "200" do
-        let(:id) {"1"}
+        url_params({id: 1})
 
         event_body({
           values: "",
@@ -22,15 +22,13 @@ RSpec.describe LambdaOpenApi::ToProcess do
         })
 
         run_lambda do
-          expect(lambda_response[:statusCode]).to eq(200)
+          expect(lambda_response[:body]).to eq({:email=>"tim@tim.com", :name=>"tim"})
         end
       end
     end
 
     get "users" do
       example_case "200" do
-        let(:id) {"1"}
-
         event_body({
           workflow_uuid: "abcd"
         }.to_json)
@@ -40,7 +38,7 @@ RSpec.describe LambdaOpenApi::ToProcess do
         })
 
         run_lambda do
-          expect(lambda_response[:statusCode]).to eq(200)
+          expect(lambda_response[:body]).to eq({:email=>"tim@tim.com", :name=>"tim"})
         end
       end
     end

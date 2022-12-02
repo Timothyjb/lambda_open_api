@@ -15,7 +15,7 @@ module LambdaOpenApi
     METHODS = [:index, :show, :create, :update, :destroy]
     METHOD_WITH_PARAM = [:show, :update, :destroy]
 
-    attr_accessor :method, :http_verb, :name, :param, :path_name, :parameters, :responses, :code, :description
+    attr_accessor :method, :http_verb, :name, :param, :path_name, :parameters, :responses, :code, :description, :summery
 
     def initialize()
       # @method = method
@@ -66,8 +66,8 @@ module LambdaOpenApi
     def path_data
       {
         "tags"=> [titleize(@name)],
-        "summary"=> "",
-        "description"=> "",
+        "summary"=> @summery,
+        "description"=> @description,
         "consumes"=> [
           "application/json"
         ],
