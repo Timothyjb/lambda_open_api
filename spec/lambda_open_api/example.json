@@ -1,0 +1,125 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Workflow Settings Api",
+    "description": "About this api",
+    "version": "1"
+  },
+  "host": "https://google.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "users/{id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Some very high level details",
+        "description": "Some more details about this path",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": false,
+            "schema": {
+              "description": "",
+              "type": "object",
+              "properties": {
+                "datas": {
+                  "type": "string"
+                }
+              },
+              "required": [
+
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "examples": {
+              "application/json": {
+                "statusCode": 200,
+                "body": {
+                  "name": "Timbo Baggins",
+                  "email": "tbaggings@onering.com",
+                  "key": null
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "users": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": null,
+        "description": null,
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": false,
+            "schema": {
+              "description": "",
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string"
+                }
+              },
+              "required": [
+
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "examples": {
+              "application/json": {
+                "statusCode": 200,
+                "body": {
+                  "name": "Timbo Baggins",
+                  "email": "tbaggings@onering.com",
+                  "key": "abcd"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

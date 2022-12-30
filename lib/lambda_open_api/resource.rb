@@ -5,15 +5,6 @@ require_relative "response"
 module LambdaOpenApi
   class Resource
     PARAMATER_EXPRESION = /[:\{](\w+)\}?/
-    METHOD_MAP = {
-      :index => "get",
-      :show => "get",
-      :update => "put",
-      :create => "post",
-      :destroy => "delete"
-    }
-    METHODS = [:index, :show, :create, :update, :destroy]
-    METHOD_WITH_PARAM = [:show, :update, :destroy]
 
     attr_accessor :method, :http_verb, :name, :param, :path_name, :parameters, :responses, :code, :description, :summery
 
@@ -22,25 +13,22 @@ module LambdaOpenApi
       @parameters = []
     end
 
-    def set_path_paramater
+    def interpolate_path_paramater
       matches = @path_name.scan PARAMATER_EXPRESION
 
-      if matches.any?
+      return unless matches.any?
 
-        matches.flatten.each do |match|
-          path_param = LambdaOpenApi::PathParameter.new
-          path_param.name = match
-          @parameters << path_param.to_json
-        end
+      matches.flatten.each do |match|
+        path_param = LambdaOpenApi::PathParameter.new
+        path_param.name = match
+        @parameters << path_param.to_json
       end
-
     end
 
-    def set_paramaters(data)
+    def set_request_body(data)
       body = LambdaOpenApi::BodyParameter.new(data, file_name: "#{method}_#{name}")
-      unless body.data.nil?
-        @parameters << body.template
-      end
+      return if body.data.nil?
+      @parameters << body.template
     end
 
     def set_response(data)
