@@ -26,16 +26,13 @@ module LambdaOpenApi
     end
 
     def set_request_body(data)
-      body = LambdaOpenApi::BodyParameter.new(data, file_name: "#{method}_#{name}")
+      body = LambdaOpenApi::BodyParameter.new(data)
       return if body.data.nil?
       @parameters << body.template
     end
 
     def set_response(data)
-      response = LambdaOpenApi::Response.new(data, file_name: "#{name}")
-      unless response.data.nil?
-        @responses["200"] = response.template
-      end
+      @responses["200"] = LambdaOpenApi::Response.new(data).response
     end
 
     def path_data

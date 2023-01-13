@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require "json"
 
-require_relative "lambda_open_api/output"
+require_relative "lambda_open_api/formatter"
 require_relative "lambda_open_api/version"
 require_relative "lambda_open_api/configuration"
 require_relative "lambda_open_api/builder"
@@ -27,7 +27,7 @@ end
 
 module LambdaOpenApiNotification
   def fully_formatted(colorizer=::RSpec::Core::Formatters::ConsoleCodes)
-    LambdaOpenApi::Output.generate_docs unless failure_count > 0 || errors_outside_of_examples_count > 0
+    LambdaOpenApi::Formatter.generate_docs unless failure_count > 0 || errors_outside_of_examples_count > 0
     super
   end
 end

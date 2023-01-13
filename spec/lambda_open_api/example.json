@@ -46,7 +46,7 @@
               "description": "",
               "type": "object",
               "properties": {
-                "datas": {
+                "values": {
                   "type": "string"
                 }
               },
