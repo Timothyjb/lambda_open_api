@@ -37,8 +37,8 @@ module LambdaOpenApi
 
       if method.to_s.split("_").first == "path"
         string = method.to_s.sub("path_", "")
-        if @res.respond_to?(string)
-          return @res.send("#{string}=", args.first)
+        if @current_resource.respond_to?(string)
+          return @current_resource.send("#{string}=", args.first)
         end
       end
 
@@ -47,30 +47,30 @@ module LambdaOpenApi
 
     # get, put, post, delete
     def crud_method(verb, path)
-      @res = LambdaOpenApi::Resource.new
-      @res.name = @name
-      @res.http_verb = verb
-      @res.path_name = path
-      @res.interpolate_path_paramater
+      @current_resource = LambdaOpenApi::Resource.new
+      @current_resource.name = @name
+      @current_resource.http_verb = verb
+      @current_resource.path_name = path
+      @current_resource.interpolate_path_paramater
       @event_hash = @default_event_hash.dup
       @event_hash["requestContext"] = {"httpMethod": verb.upcase}
 
       yield
+
+      @current_resource.set_request_body(event_hash_body)
+      tested_resources << @current_resource
     end
 
     def example_case(code)
-      @res.code = code
+      @current_resource.code = code
 
       yield
-
-      @res.set_request_body(event_hash_body)
-      tested_resources << @res
     end
 
     def run_example(test_name=nil, &block)
       lambda_response_value = invoke_lambda
 
-      it "#{test_name || @res.path_name}" do
+      it "#{test_name || @current_resource.path_name}" do
         @lambda_response_value = lambda_response_value
 
         def lambda_response
@@ -86,7 +86,7 @@ module LambdaOpenApi
     end
 
     def url_params(hash)
-      path = @res.path_name.dup
+      path = @current_resource.path_name.dup
       @event_hash["resource"] = path.gsub(LambdaOpenApi::Resource::PARAMATER_EXPRESION) {|match|
         match = hash[match.delete('{}:').to_sym]
       }
@@ -96,7 +96,7 @@ module LambdaOpenApi
       url_params({}) if @event_hash["resource"].nil?
       lambda_response = described_class.send(@lambda_method || "process", event: @event_hash, context: lambda_context)
 
-      @res.set_response(lambda_response["body"] || lambda_response)
+      @current_resource.set_response(lambda_response["body"] || lambda_response)
 
       lambda_response
     end
