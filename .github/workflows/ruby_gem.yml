@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: ['2.6', '2.7']
+        ruby-version: ['2.6', '2.7', '3.0']
     permissions:
       contents: read
       packages: write
@@ -28,4 +28,6 @@ jobs:
       run: |
         bundle install
     - name: Run tests
-      run: bundle exec rspec
+      run: |
+        bundle exec rspec
+        bundle exec ruby spec/output_tester.rb
