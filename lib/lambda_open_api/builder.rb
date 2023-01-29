@@ -26,17 +26,17 @@ module LambdaOpenApi
         return
       end
 
-      if method.start_with?("event")
+      if method.to_s.start_with?("event")
         variable = method.to_s.sub("event_", "")
         return @event.send("#{variable}=", args.first)
       end
 
-      if method.start_with?("default_event")
+      if method.to_s.start_with?("default_event")
         variable = method.to_s.sub("default_event_", "")
         return @default_event.send("#{variable}=", args.first)
       end
 
-      if method.start_with?("path")
+      if method.to_s.start_with?("path")
         string = method.to_s.sub("path_", "")
         if @action.respond_to?(string)
           return @action.send("#{string}=", args.first)
