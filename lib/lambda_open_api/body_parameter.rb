@@ -14,7 +14,7 @@ module LambdaOpenApi
       end
     end
 
-    def template
+    def json
       hash = LambdaOpenApi::BodyProperty.new
       hash.generate(@data)
       {

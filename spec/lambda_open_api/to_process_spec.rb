@@ -1,19 +1,17 @@
 require_relative '../spec_helper'
 
-module LambdaOpenApi
-  class ToProcess
-    def self.process(event:, context: {})
-      key = JSON.parse(event["body"])["key"]
-      {
-        statusCode: 200,
-        body: {name: "Timbo Baggins", email: "tbaggings@onering.com", key: key}
-      }
-    end
+class MyLambda
+  def self.process(event:, context: {})
+    key = JSON.parse(event["body"])["key"]
+    {
+      statusCode: 200,
+      body: {name: "Timbo Baggins", email: "tbaggings@onering.com", key: key}
+    }
   end
 end
 
 
-RSpec.describe LambdaOpenApi::ToProcess do
+RSpec.describe MyLambda do
 
   resource "Users" do
 
@@ -22,7 +20,7 @@ RSpec.describe LambdaOpenApi::ToProcess do
       path_description "Some more details about this path"
 
       example_case "200" do
-        url_params({id: 1})
+        parameter({id: 1})
 
         event_body({
           values: ""

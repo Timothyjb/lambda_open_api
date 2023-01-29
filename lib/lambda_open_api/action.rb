@@ -3,14 +3,19 @@ require_relative "body_parameter"
 require_relative "response"
 
 module LambdaOpenApi
-  class Resource
+  class Action
     PARAMATER_EXPRESION = /[:\{](\w+)\}?/
 
     attr_accessor :method, :http_verb, :name, :param, :path_name, :parameters, :responses, :code, :description, :summery
 
-    def initialize()
+    def initialize(name:, http_verb:, path_name:)
       @responses = {}
       @parameters = []
+      @name = name
+      @http_verb = http_verb
+      @path_name = path_name
+
+      interpolate_path_paramater
     end
 
     def interpolate_path_paramater
@@ -19,23 +24,19 @@ module LambdaOpenApi
       return unless matches.any?
 
       matches.flatten.each do |match|
-        path_param = LambdaOpenApi::PathParameter.new
-        path_param.name = match
-        @parameters << path_param.to_json
+        @parameters << LambdaOpenApi::PathParameter.new(name: match).json
       end
     end
 
     def set_request_body(data)
-      body = LambdaOpenApi::BodyParameter.new(data)
-      return if body.data.nil?
-      @parameters << body.template
+      @parameters << LambdaOpenApi::BodyParameter.new(data).json
     end
 
     def set_response(data)
-      @responses["200"] = LambdaOpenApi::Response.new(data).response
+      @responses["200"] = LambdaOpenApi::Response.new(data).json
     end
 
-    def path_data
+    def action_json
       {
         "tags"=> [titleize(@name)],
         "summary"=> @summery,

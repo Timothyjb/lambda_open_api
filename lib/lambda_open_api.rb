@@ -5,6 +5,7 @@ require_relative "lambda_open_api/formatter"
 require_relative "lambda_open_api/version"
 require_relative "lambda_open_api/configuration"
 require_relative "lambda_open_api/builder"
+require_relative "lambda_open_api/invoker"
 
 module LambdaOpenApi
   class Error < StandardError; end

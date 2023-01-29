@@ -2,7 +2,11 @@ module LambdaOpenApi
   class PathParameter
     attr_accessor :name, :in, :description, :required, :type
 
-    def to_json
+    def initialize(name: nil)
+      @name = name
+    end
+
+    def json
       {
         "name"=> @name || "id",
         "in"=> @in || "path",

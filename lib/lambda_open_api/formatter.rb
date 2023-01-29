@@ -4,9 +4,9 @@ module LambdaOpenApi
     @paths = {}
 
     class << self
-      def add_resource(resource)
+      def add_request(resource)
         @paths[resource.path_name] ||= {}
-        @paths[resource.path_name][resource.http_verb] = resource.path_data
+        @paths[resource.path_name][resource.http_verb] = resource.action_json
       end
 
       def generate_docs

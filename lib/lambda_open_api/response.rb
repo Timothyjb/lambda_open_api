@@ -6,7 +6,7 @@ module LambdaOpenApi
       @data = data
     end
 
-    def response
+    def json
       {
         "examples": {
           "application/json": @data
