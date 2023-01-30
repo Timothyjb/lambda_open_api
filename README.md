@@ -162,6 +162,11 @@ which will output an Open Api file like this
 
 ```
 
+From https://editor-next.swagger.io/
+<img width="853" alt="Screen Shot 2023-01-30 at 9 42 18 AM" src="https://user-images.githubusercontent.com/9610694/215508235-c0edfadb-6df1-4cc5-83ef-43fdecc9dc34.png">
+
+<img width="851" alt="Screen Shot 2023-01-30 at 9 42 04 AM" src="https://user-images.githubusercontent.com/9610694/215508248-b852cff0-2bf3-40ae-a601-43c0e6173831.png">
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
