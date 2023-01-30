@@ -50,7 +50,7 @@ module LambdaOpenApi
     def crud_verb(verb, path)
       @action = LambdaOpenApi::Action.new(name: @name, http_verb: verb, path_name: path)
       @event = @default_event.dup
-      @event.request_context = {"httpMethod": verb.upcase}
+      @event.request_context = {"httpMethod" => verb.upcase}
 
       yield
 
