@@ -1,29 +1,32 @@
 # LambdaOpenApi
 
-The purpose of this gem is to allow developers to generate Open Api (swagger) file based on the input and output of code that is intended to be ran as an AWS Lambda triggered by an AWS API Gateway.
-It hooks into Rspec and generates the an Open Api file after processing your specs.
-
+This gem is a light weight DSL that works with rspec to allow developers to generate an OpenAPI (swagger) file based an AWS Lambda invoked by API Gateway. It works by writing a simple unit test for your lambda's code. When the test is executed, the input event and returned response are captured and used to build an OpenAPI file. 
 
 ## Installation
 
-Install the gem and add to the application's Gemfile by executing:
-
-    $ bundle add lambda_open_api
-
-If bundler is not being used to manage dependencies, install the gem by executing:
-
-    $ gem install lambda_open_api
+Add to your gem file:
+```ruby
+group :test do
+  gem 'rspec'
+  gem 'lambda_open_api'
+end
+```
     
-Create an initializer file
+Create an initializer file to configure the gem. 
 ```ruby
 LambdaOpenApi.configure do |config|
+  config.file_name = "open_api.json"
   config.title = "My Example Api"
   config.description = "About this api"
-  config.host = "https://my_example.com"
+  config.version = "1"
+  config.host = "https://my_example_api.com"
+  config.schemes = ["https"]
+  config.consumes = ["application/json"] 
+  config.produces = ["application/json"]
 end
 ```
 
-Then in your spec helper, include the gem:
+Include the gem in your spec hepler file `spec/spec_helper.rb` or any file that gets loaded before rspec is ran. 
 ```ruby
 require "lambda_open_api"
 
@@ -90,7 +93,7 @@ RSpec.describe MyLambda do
 end
 ```
 
-Then run rspec 
+Run rspec 
 ```bash
 rspec
 ```
