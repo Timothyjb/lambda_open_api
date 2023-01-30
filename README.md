@@ -13,9 +13,7 @@ Install the gem and add to the application's Gemfile by executing:
 If bundler is not being used to manage dependencies, install the gem by executing:
 
     $ gem install lambda_open_api
-
-## Usage
-
+    
 Create an initializer file
 ```ruby
 LambdaOpenApi.configure do |config|
@@ -25,8 +23,22 @@ LambdaOpenApi.configure do |config|
 end
 ```
 
+Then in your spec helper, include the gem:
+```ruby
+require "lambda_open_api"
 
-For this example Lambda
+RSpec.configure do |config|
+  # ...
+  # the rest of your normal config
+  #...
+end
+```
+
+That's it!
+
+## Usage
+
+Let's say we have a lmabda that looks something like this.
 ```ruby
 require_relative '../spec_helper'
 
@@ -44,7 +56,7 @@ class MyLambda
 end
 ```
 
-We may write a test like this
+We can write a spec file like this:
 
 ```ruby
 RSpec.describe MyLambda do
@@ -78,7 +90,12 @@ RSpec.describe MyLambda do
 end
 ```
 
-which will output an Open Api file like this
+Then run rspec 
+```bash
+rspec
+```
+
+An Open Api file will be generated and saved that looks like this:
 ```json
 {
   "swagger": "2.0",
@@ -175,7 +192,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/lambda_open_api.
+Bug reports and pull requests are welcome on GitHub at https://github.com/Timothyjb/lambda_open_api.
 
 ## License
 
