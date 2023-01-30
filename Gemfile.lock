@@ -2,9 +2,6 @@ PATH
   remote: .
   specs:
     lambda_open_api (0.1.0)
-      minitest
-      minitest-reporters
-      rspec
 
 GEM
   remote: https://rubygems.org/
@@ -39,7 +36,10 @@ PLATFORMS
 
 DEPENDENCIES
   lambda_open_api!
+  minitest
+  minitest-reporters
   rake (~> 13.0)
+  rspec
 
 BUNDLED WITH
    2.3.20
