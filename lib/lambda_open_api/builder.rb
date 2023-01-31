@@ -115,7 +115,7 @@ module LambdaOpenApi
         def self.invoke
           invokcation = LambdaOpenApi::Invoker.new(klass: @klass, method: "process", event: @event.json, context: OpenStruct.new(aws_request_id: "123"))
           @action.set_response(invokcation.response_body)
-          invokcation.response_body
+          invokcation.response
         end
         def self.set_action(action)
           @action = action

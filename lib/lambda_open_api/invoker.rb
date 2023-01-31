@@ -8,7 +8,7 @@ module LambdaOpenApi
     end
 
     def response_body
-      response["body"] || response
+      response["body"] || response[:body] || response
     end
 
   end
