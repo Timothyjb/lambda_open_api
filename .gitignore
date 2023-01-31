@@ -6,7 +6,7 @@
 /pkg/
 /spec/reports/
 /tmp/
-/open_api.json
+/open_api/
 
 # rspec failure tracking
 .rspec_status

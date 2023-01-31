@@ -13,6 +13,10 @@ module LambdaOpenApi
                   :body,
                   :is_base64_encoded
 
+    def initialize
+      @body = "{}"
+    end
+
     def json
       {
         "resource" => resource,

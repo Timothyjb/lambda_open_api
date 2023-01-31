@@ -66,8 +66,9 @@ module LambdaOpenApi
 
     def run_example(test_name=nil, &block)
       klass = create_class
+      test_name ||= "#{@action.http_verb} #{@action.path_name}"
 
-      it "#{test_name || @action.path_name}" do
+      it "#{test_name}" do
         @klass = klass
         def lambda_response
           @lambda_response ||= @klass.invoke
