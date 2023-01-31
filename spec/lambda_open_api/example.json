@@ -139,6 +139,59 @@
           }
         }
       }
+    },
+    "path/{id}/with_params": {
+      "post": {
+        "tags": [
+          "Use cases"
+        ],
+        "summary": null,
+        "description": null,
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": false,
+            "schema": {
+              "description": "",
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string"
+                }
+              },
+              "required": [
+
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "examples": {
+              "application/json": {
+                "name": "Timbo Baggins",
+                "email": "tbaggings@onering.com",
+                "key": "abcd"
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

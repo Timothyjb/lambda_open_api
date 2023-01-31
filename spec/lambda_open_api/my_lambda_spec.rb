@@ -3,6 +3,7 @@ require_relative '../spec_helper'
 class MyLambda
   def self.process(event:, context: {})
     key = JSON.parse(event["body"])["key"]
+    event["pathParameters"]["id"]
     {
       statusCode: 200,
       body: {name: "Timbo Baggins", email: "tbaggings@onering.com", key: key}
@@ -17,6 +18,7 @@ RSpec.describe MyLambda do
 
     post "includes/objects/and/arrays" do
       example_case "200" do
+        parameter({id: "1"})
         event_body(
           {
             key: "abcd",
@@ -32,5 +34,24 @@ RSpec.describe MyLambda do
         end
       end
     end
+
+    post "path/{id}/with_params" do
+      example_case "200" do
+        parameter({id: "1"})
+
+        event_body(
+          {
+            key: "abcd"
+          }.to_json)
+
+        event_headers({
+          "Api-Key" => "the_api_key"
+        })
+        run_example do
+          expect(lambda_response[:body]).to eq({:email=>"tbaggings@onering.com", :name=>"Timbo Baggins", key: "abcd"})
+        end
+      end
+    end
+
   end
 end

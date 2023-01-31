@@ -83,6 +83,7 @@ module LambdaOpenApi
       @event.resource = path.gsub(LambdaOpenApi::Action::PARAMATER_EXPRESION) {|match|
         match = hash[match.delete('{}:').to_sym]
       }
+      @event.path_parameters = hash.inject({}) {|hash, (key, value)| hash[key.to_s] = value; hash}
     end
 
     def invoke_lambda
