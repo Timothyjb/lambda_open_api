@@ -65,14 +65,12 @@ module LambdaOpenApi
     end
 
     def run_example(test_name=nil, &block)
-      lambda_response_value = invoke_lambda
-      @action.set_response(lambda_response_value)
+      klass = create_class
 
       it "#{test_name || @action.path_name}" do
-        @lambda_response_value = lambda_response_value
-
+        @klass = klass
         def lambda_response
-          @lambda_response_value
+          @lambda_response ||= @klass.invoke
         end
 
         instance_eval &block
@@ -97,6 +95,33 @@ module LambdaOpenApi
 
     def lambda_context
       OpenStruct.new(aws_request_id: "123")
+    end
+
+    def create_class
+      dynamic_name = "ClassName#{rand(10000)}"
+      klass = Object.const_set(dynamic_name, Class.new do
+        def self.set_event(event)
+          @event = event
+        end
+
+        def self.event
+          @event
+        end
+
+        def self.set_described_class(klass)
+          @klass = klass
+        end
+
+        def self.invoke
+          invokcation = LambdaOpenApi::Invoker.new(klass: @klass, method: "process", event: @event.json, context: OpenStruct.new(aws_request_id: "123"))
+
+          invokcation.response_body
+        end
+      end)
+
+      klass.set_event(@event)
+      klass.set_described_class(described_class)
+      klass
     end
 
   end
