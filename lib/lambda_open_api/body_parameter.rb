@@ -4,14 +4,8 @@ module LambdaOpenApi
   class BodyParameter
     attr_accessor :data
 
-    def initialize(data = nil, file_name: nil)
-      @file_name = file_name
-
+    def initialize(data = nil)
       @data = data
-      if data.nil? && File.exists?("lib/lambda_open_api/examples/requests/#{file_name}.json")
-        json = File.open("lib/lambda_open_api/examples/requests/#{file_name}.json").read
-        @data = JSON.parse(json)
-      end
     end
 
     def json

@@ -15,6 +15,22 @@ module LambdaOpenApi
             "type"=>  "object",
             "properties"=> hash.props
           }
+        elsif value.is_a?(Array)
+          item_props = {}
+
+          value.each do |item|
+            hash = LambdaOpenApi::BodyProperty.new
+            hash.generate(item)
+            item_props.merge!(hash.props)
+          end
+
+          props[key.to_s] = {
+            "type"=>  "array",
+            "items"=> {
+              "type" => "object",
+              "properties" => item_props
+            }
+          }
         else
           props[key.to_s] = {
             "type"=>  value_type(value)

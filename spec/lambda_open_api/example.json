@@ -46,7 +46,7 @@
               "description": "",
               "type": "object",
               "properties": {
-                "values": {
+                "key": {
                   "type": "string"
                 }
               },
@@ -62,17 +62,17 @@
               "application/json": {
                 "name": "Timbo Baggins",
                 "email": "tbaggings@onering.com",
-                "key": null
+                "key": "some_key_value"
               }
             }
           }
         }
       }
     },
-    "users": {
+    "includes/objects/and/arrays": {
       "post": {
         "tags": [
-          "Users"
+          "Use cases"
         ],
         "summary": null,
         "description": null,
@@ -94,6 +94,31 @@
               "properties": {
                 "key": {
                   "type": "string"
+                },
+                "object": {
+                  "type": "object",
+                  "properties": {
+                    "key_1": {
+                      "type": "string"
+                    },
+                    "key_2": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "array": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "item_1": {
+                        "type": "string"
+                      },
+                      "item_2": {
+                        "type": "string"
+                      }
+                    }
+                  }
                 }
               },
               "required": [

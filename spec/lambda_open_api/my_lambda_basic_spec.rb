@@ -23,7 +23,7 @@ RSpec.describe MyLambda do
         parameter({id: 1})
 
         event_body({
-          values: ""
+          key: "some_key_value"
         }.to_json)
 
         event_headers({
@@ -31,25 +31,11 @@ RSpec.describe MyLambda do
         })
 
         run_example do
-          expect(lambda_response[:body]).to eq({:email=>"tbaggings@onering.com", :name=>"Timbo Baggins", key: nil})
+          expect(lambda_response[:body]).to eq({:email=>"tbaggings@onering.com", :name=>"Timbo Baggins", key: "some_key_value"})
           expect(lambda_response[:statusCode]).to eq(200)
         end
       end
     end
 
-    post "users" do
-      example_case "200" do
-        event_body({
-          key: "abcd"
-        }.to_json)
-
-        event_headers({
-          "Api-Key" => "the_api_key"
-        })
-        run_example do
-          expect(lambda_response[:body]).to eq({:email=>"tbaggings@onering.com", :name=>"Timbo Baggins", key: "abcd"})
-        end
-      end
-    end
   end
 end
