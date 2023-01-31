@@ -13,35 +13,16 @@ end
 
 RSpec.describe MyLambda do
 
-  resource "Users" do
+  resource "Use Cases" do
 
-    get "users/{id}" do
-      path_summery "Some very high level details"
-      path_description "Some more details about this path"
-
+    post "includes/objects/and/arrays" do
       example_case "200" do
-        parameter({id: 1})
-
-        event_body({
-          values: ""
-        }.to_json)
-
-        event_headers({
-          "Api-Key" => "the_api_key"
-        })
-
-        run_example do
-          expect(lambda_response[:body]).to eq({:email=>"tbaggings@onering.com", :name=>"Timbo Baggins", key: nil})
-          expect(lambda_response[:statusCode]).to eq(200)
-        end
-      end
-    end
-
-    post "users" do
-      example_case "200" do
-        event_body({
-          key: "abcd"
-        }.to_json)
+        event_body(
+          {
+            key: "abcd",
+            object: {key_1: "value_1", key_2: "value_2"},
+            array: [{item_1: "value_1", item_2: "value_2"}]
+          }.to_json)
 
         event_headers({
           "Api-Key" => "the_api_key"
