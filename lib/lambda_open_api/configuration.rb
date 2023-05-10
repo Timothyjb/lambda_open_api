@@ -7,7 +7,7 @@ module LambdaOpenApi
       @title = "Workflow Settings Api"
       @description = "About this api"
       @version = "1"
-      @host = "https://google.com"
+      @host = "google.com"
       @schemes = ["https"]
       @consumes = ["application/json"]
       @produces = ["application/json"]
