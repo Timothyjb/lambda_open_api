@@ -51,7 +51,7 @@ module LambdaOpenApi
       @action = LambdaOpenApi::Action.new(name: @name, http_verb: verb, path_name: path)
       @event = @default_event.dup
       @event.request_context = {"httpMethod" => verb.upcase, "http" => {"method" => verb.upcase}}
-
+      @event.path = path
       yield
 
       @action.set_request_body(JSON.parse(@event.body))
