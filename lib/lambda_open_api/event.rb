@@ -30,7 +30,8 @@ module LambdaOpenApi
         "pathParameters" => path_parameters,
         "stageVariables" => stage_variables,
         "body" => body,
-        "isBase64Encoded" => is_base64_encoded
+        "isBase64Encoded" => is_base64_encoded,
+        "rawPath": path
       }
     end
   end
