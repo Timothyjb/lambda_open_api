@@ -8,6 +8,7 @@ module LambdaOpenApi
     end
 
     def response_body
+      return unless response
       response["body"] || response[:body] || response
     end
 
